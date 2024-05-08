@@ -144,6 +144,7 @@ Here are some of the key reasons why this pattern is considered beneficial:
 - Improved Scalability: The Chain of Responsibility pattern can help manage growing complexity in systems where numerous
   objects might handle a request. As systems grow and evolve, maintaining them becomes more manageable by simply
   adjusting the chain rather than reengineering the relationships between objects.
+
 And its drawbacks:
 - Performance Concerns: As requests might pass through multiple handlers before being processed, the chain can introduce
   additional overhead and delay in request processing. This can be particularly problematic in performance-sensitive
