@@ -19,7 +19,7 @@ At its core, the NotifierService class orchestrates how notifications are sent o
 handler is an implementation of the NotifierHandlerInterface, ensuring they all adhere to a standard structure and
 behavior. This is where the chain of responsibility pattern comes into play. The NotifierService class doesn't need to
 know which handler will process the notification; it simply passes the notification between the handlers in the chain
-until one of them decides it can handle the notification, in this case we break from the chain.
+until one of them decides it can handle the notification, in that case we break from the chain.
 
 ![Diagram.jpg](Diagram.jpg)
 
