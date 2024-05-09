@@ -18,9 +18,13 @@ the classic approach, since we will use an array of handlers instead of a tradit
 At its core, the NotifierService class orchestrates how notifications are sent out through a variety of handlers. Each
 handler is an implementation of the NotifierHandlerInterface, ensuring they all adhere to a standard structure and
 behavior. This is where the chain of responsibility pattern comes into play. The NotifierService class doesn't need to
-know which handler will process the notification; it simply passes the notification to the first handler in the chain.
+know which handler will process the notification; it simply passes the notification between the handlers in the chain
+until one of them decides it can handle the notification, in this case we break from the chain.
 
-This is where we use a little of Symfony's magic to automatically inject all the handlers that implement
+![Diagram.jpg](Diagram.jpg)
+
+Getting all available handlers into the NotifierService class is a bit tricky. We could manually inject each handler
+but this is where we use a little of Symfony's magic to automatically inject all the handlers that implement
 NotifierHandlerInterface into the construction of NotifierService:
 
 ```yaml
@@ -121,6 +125,7 @@ class EmailNotifierHandler implements NotifierHandlerInterface
     }
 }
 ```
+
 In this example, we have three handlers: EmailNotifierHandler, SmsNotifierHandler, and SlackNotifierHandler. Each
 handler is responsible for sending notifications through a specific channel (email, SMS, or Slack). The NotifierService
 class receives a notification and iterates over each handler to determine which one can handle the notification. If a
@@ -144,7 +149,7 @@ Here are some of the key reasons why this pattern is considered beneficial:
 - Improved Scalability: The Chain of Responsibility pattern can help manage growing complexity in systems where numerous
   objects might handle a request. As systems grow and evolve, maintaining them becomes more manageable by simply
   adjusting the chain rather than reengineering the relationships between objects.
-And its drawbacks:
+  And its drawbacks:
 - Performance Concerns: As requests might pass through multiple handlers before being processed, the chain can introduce
   additional overhead and delay in request processing. This can be particularly problematic in performance-sensitive
   applications where every millisecond counts.
@@ -157,6 +162,7 @@ And its drawbacks:
   more appropriate and efficient.
 
 Running this proof of concept will require you to have a Symfony environment set up.
+
 ```bash
 git clone git@github.com/ivanstan/chain-of-responsibility.git
 ```
